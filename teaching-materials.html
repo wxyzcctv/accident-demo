@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>重大危害事件预警平台——AI大模型在企业业务场景中的落地应用</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ 
+      startOnLoad: true, 
+      theme: 'dark',
+      themeVariables: {
+        fontSize: '16px',
+      },
+      flowchart: {
+        htmlLabels: true,
+        useMaxWidth: true
+      }
+    });
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #0a1628;
+      --bg-secondary: #0f1f3d;
+      --bg-card: #132744;
+      --border-color: #1e3a5f;
+      --text-primary: #e0e6f0;
+      --text-secondary: #8899bb;
+      --accent-blue: #409eff;
+      --accent-green: #67c23a;
+      --accent-orange: #e6a23c;
+      --accent-red: #f56c6c;
+      --accent-purple: #a855f7;
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .section:hover {
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 20px rgba(64, 158, 255, 0.15);
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 20px;
+      padding-left: 12px;
+      border-left: 4px solid var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .duration {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      background: var(--bg-secondary);
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    .subsection-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 20px 0 12px;
+    }
+
+    .subsection-title::before {
+      content: '◆';
+      color: var(--accent-orange);
+      margin-right: 8px;
+    }
+
+    .mermaid-container {
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .mermaid-container svg {
+      max-width: 100%;
+    }
+
+
+
+    p {
+      color: var(--text-primary);
+      font-size: 14px;
+      margin-bottom: 12px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      color: var(--text-primary);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    li strong {
+      color: var(--accent-blue);
+    }
+
+    .highlight {
+      background: rgba(64, 158, 255, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--accent-blue);
+      font-family: 'Courier New', monospace;
+    }
+
+    .highlight-green {
+      background: rgba(103, 194, 58, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--accent-green);
+    }
+
+    .highlight-red {
+      background: rgba(245, 108, 108, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--accent-red);
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    td {
+      color: var(--text-primary);
+    }
+
+    tr:hover {
+      background: rgba(64, 158, 255, 0.05);
+    }
+
+    .metrics-table {
+      margin: 20px 0;
+    }
+
+    .metrics-table td:first-child {
+      width: 30%;
+    }
+
+    .metrics-table td:nth-child(2),
+    .metrics-table td:nth-child(3) {
+      text-align: center;
+    }
+
+    .metrics-table td:nth-child(4) {
+      text-align: right;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .note {
+      background: rgba(230, 162, 60, 0.1);
+      border-left: 4px solid var(--accent-orange);
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .innovation-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .innovation-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .innovation-content {
+      flex: 1;
+    }
+
+    .innovation-content p {
+      margin: 0;
+    }
+
+    .demo-tip {
+      background: rgba(103, 194, 58, 0.1);
+      border: 1px solid rgba(103, 194, 58, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+
+    .demo-tip p {
+      margin: 0;
+      color: var(--accent-green);
+      font-size: 13px;
+    }
+
+    .flow-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .flow-number {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      border: 2px solid var(--accent-blue);
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      border-top: 1px solid var(--border-color);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>重大危害事件预警平台</h1>
+      <h1 style="margin-top: 8px;">——AI大模型在企业业务场景中的落地应用</h1>
+    </div>
+
+    <!-- 一、整体技术架构 -->
+    <div class="section">
+      <div class="section-title">
+        <span>一、整体技术架构</span>
+      </div>
+      <div class="subsection-title">1.1 分层架构</div>
+      <div class="mermaid-container">
+        <pre class="mermaid">
+flowchart TB
+    subgraph 前端交互层
+        A[Vue3 + Element Plus]
+    end
+    
+    subgraph API网关层
+        B[FastAPI]
+    end
+    
+    subgraph 智能体编排层
+        C[Qwen-Agent框架]
+        C1[Agent角色配置]
+        C2[工具绑定/工作流编排]
+        C3[多Agent分工辩论协同]
+    end
+    
+    subgraph 模型服务层
+        D[vLLM + Ollama]
+        D1[Qwen3-LoRA微调]
+        D2[情感分析/序列预测]
+        D3[聚类模型]
+    end
+    
+    subgraph 数据与知识层
+        E[数据存储与检索]
+        E1[数据采集/过滤去重]
+        E2[特征提取/Faiss向量]
+        E3[项目知识库]
+    end
+    
+    A --> B
+    B --> C
+    C --> C1
+    C --> C2
+    C --> C3
+    C ---> D
+    D --> D1
+    D --> D2
+    D --> D3
+    C -----> E
+    E --> E1
+    E --> E2
+    E --> E3
+    
+    style A fill:#409eff,stroke:#409eff,stroke-width:2px,color:#fff
+    style B fill:#67c23a,stroke:#67c23a,stroke-width:2px,color:#fff
+    style C fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style D fill:#e6a23c,stroke:#e6a23c,stroke-width:2px,color:#fff
+    style E fill:#f56c6c,stroke:#f56c6c,stroke-width:2px,color:#fff
+        </pre>
+      </div>
+
+      <div class="subsection-title">1.2 数据流转路径</div>
+      <div class="mermaid-container">
+        <pre class="mermaid">
+flowchart LR
+    A[数据采集] --> B[清洗过滤去重]
+    B --> C[特征提取情感/序列/聚类]
+    C --> D[Agent分析]
+    D --> E[多Agent协商]
+    E --> F[预警输出]
+    F --> G[报告生成]
+    
+    style A fill:#132744,stroke:#409eff,stroke-width:2px
+    style B fill:#132744,stroke:#67c23a,stroke-width:2px
+    style C fill:#132744,stroke:#a855f7,stroke-width:2px
+    style D fill:#132744,stroke:#e6a23c,stroke-width:2px
+    style E fill:#132744,stroke:#f56c6c,stroke-width:2px
+    style F fill:#132744,stroke:#409eff,stroke-width:2px
+    style G fill:#132744,stroke:#67c23a,stroke-width:2px
+        </pre>
+      </div>
+
+      <div class="subsection-title">讲解要点</div>
+      <ul>
+        <li><strong>Qwen-Agent 框架</strong> 是连接大模型与业务逻辑的核心编排层</li>
+        <li><strong>vLLM</strong> 保证大模型推理性能，<strong>Faiss</strong> 支撑知识库高效检索</li>
+        <li>整套架构支持 <span class="highlight-green">纯私有化部署</span>，满足数据安全要求</li>
+      </ul>
+    </div>
+
+    <!-- 二、垂直领域大模型微调 -->
+    <div class="section">
+      <div class="section-title">
+        <span>二、垂直领域大模型微调——Qwen3 + LoRA</span>
+      </div>
+      <div class="subsection-title">2.1 为什么需要微调？</div>
+      <ul>
+        <li>通用大模型对公共安全领域的专业术语、预警逻辑、报告格式理解不足</li>
+        <li>直接使用通用模型容易产生幻觉、遗漏关键风险特征</li>
+      </ul>
+
+      <div class="subsection-title">2.2 LoRA 微调原理与选型依据</div>
+      <p><strong>LoRA（Low-Rank Adaptation）：</strong>在冻结原模型参数基础上，注入可训练的低秩矩阵</p>
+      <p><strong>优势：</strong>训练参数极少（通常 < 0.5%），显存需求低，可快速迭代；推理时可合并权重，不增加延迟</p>
+      
+      <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; margin: 16px 0;">
+        <p style="font-weight: 600; color: var(--accent-blue); margin-bottom: 12px;">配置示例（Demo 中展示）：</p>
+        <ul style="margin-left: 16px;">
+          <li><span class="highlight">基座模型</span>：Qwen3-7B</li>
+          <li><span class="highlight">LoRA rank</span> = 16, alpha = 32</li>
+          <li><span class="highlight">目标模块</span>：q_proj, v_proj</li>
+          <li><span class="highlight">训练数据</span>：预警领域问答对、历史事件报告、专家标注的高质量语料</li>
+        </ul>
+      </div>
+
+      <div class="subsection-title">2.3 微调效果对比</div>
+      <div class="table-container">
+        <table>
+          <tr>
+            <th>对比维度</th>
+            <th>微调前（通用模型）</th>
+            <th>微调后（领域模型）</th>
+          </tr>
+          <tr>
+            <td>问题理解</td>
+            <td>泛化安全建议</td>
+            <td>具体专业分析</td>
+          </tr>
+          <tr>
+            <td>响应内容</td>
+            <td>"氯气泄漏需注意安全"</td>
+            <td>"氯气缓慢泄漏的早期征兆包括：传感器异常读数、周边社媒出现'刺鼻气味'关键词、建议启动三级响应"</td>
+          </tr>
+          <tr>
+            <td>领域准确率</td>
+            <td>约 75%</td>
+            <td>约 90%（提升 15%~20%）</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="subsection-title">2.4 私有化部署方案：vLLM</div>
+      <ul>
+        <li><strong>vLLM 特性：</strong>PagedAttention、连续批处理、高吞吐低延迟</li>
+        <li><strong>部署效果（Demo 数据）：</strong>单卡支持 100+ 并发，平均延迟 < 200ms</li>
+        <li><strong>部署形态：</strong>Docker 容器化，完全离线运行</li>
+      </ul>
+
+      <div class="demo-tip">
+        <p><strong>演示提示：</strong>打开 /model-factory 页面，点击 Qwen3-LoRA 模型卡片，展示配置、loss 曲线和对比对话。</p>
+      </div>
+    </div>
+
+    <!-- 三、多模型协同 -->
+    <div class="section">
+      <div class="section-title">
+        <span>三、多模型协同——情感分析、序列预测与聚类</span>
+
+      </div>
+      <div class="subsection-title">3.1 情感分析模型</div>
+      <ul>
+        <li><strong>任务：</strong>对采集的文本数据计算情感倾向（正面/负面/中性）</li>
+        <li><strong>用途：</strong>捕捉公众情绪突变，如某地负面情绪急剧上升可能预示事件发生</li>
+        <li><strong>实现：</strong>基于 BERT 微调的情感分类模型，定期更新</li>
+      </ul>
+
+      <div class="subsection-title">3.2 序列预测模型</div>
+      <ul>
+        <li><strong>任务：</strong>对某类事件的历史发生频次进行时间序列预测</li>
+        <li><strong>算法：</strong>LSTM 或 Transformer 预测模型</li>
+        <li><strong>用途：</strong>当实际监测到的异常信号频次超出预测置信区间时，触发预警</li>
+      </ul>
+
+      <div class="subsection-title">3.3 聚类模型</div>
+      <ul>
+        <li><strong>任务：</strong>对高维文本特征向量进行无监督聚类</li>
+        <li><strong>算法：</strong>K-Means / DBSCAN，结合 Faiss 加速</li>
+        <li><strong>用途：</strong>自动发现新的话题簇、异常话题群组，作为潜在风险线索</li>
+      </ul>
+
+      <div class="subsection-title">3.4 模型如何嵌入 Agent 工作流</div>
+      <div class="mermaid-container">
+        <pre class="mermaid">
+flowchart TD
+    A[预警Agent] --> B[并行调用特征提取模型]
+    B --> C[情感分析模型]
+    B --> D[序列预测模型]
+    B --> E[聚类模型]
+    C --> F[汇总特征]
+    D --> F
+    E --> F
+    F --> G[大模型综合研判]
+    G --> H[输出预警结果]
+    
+    style A fill:#a855f7,stroke:#a855f7,stroke-width:2px,color:#fff
+    style C fill:#67c23a,stroke:#67c23a,stroke-width:2px,color:#fff
+    style D fill:#409eff,stroke:#409eff,stroke-width:2px,color:#fff
+    style E fill:#e6a23c,stroke:#e6a23c,stroke-width:2px,color:#fff
+    style G fill:#f56c6c,stroke:#f56c6c,stroke-width:2px,color:#fff
+        </pre>
+      </div>
+
+      <div class="demo-tip">
+        <p><strong>演示提示：</strong>演示 /feature-analysis 页面，展示三类模型产出的可视化图表，并说明它们在预警链路中的位置。</p>
+      </div>
+    </div>
+
+    <!-- 四、多智能体协同机制 -->
+    <div class="section">
+      <div class="section-title">
+        <span>四、多智能体协同机制——Qwen-Agent 框架深度解析</span>
+
+      </div>
+      <div class="subsection-title">4.1 为什么需要多智能体？</div>
+      <ul>
+        <li>单一通用大模型面对复杂预警任务时存在知识盲区、推理深度不足</li>
+        <li>重大危害事件往往是弱信号、跨领域、隐匿性强的</li>
+        <li>多智能体可以实现"分领域专家会诊"，形成互补增强</li>
+      </ul>
+
+      <div class="subsection-title">4.2 基于 Qwen-Agent 的多智能体构建方式</div>
+      <p>以"有害物质泄露预警Agent"为例，其构建三要素：</p>
+      
+      <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; margin: 16px 0;">
+        <p style="font-weight: 600; color: var(--accent-blue); margin-bottom: 12px;">角色定义：</p>
+        <p style="color: var(--text-secondary); font-style: italic;">你是一个危险化学品泄露预警专家，擅长分析多源信息并判断泄露风险等级。</p>
+      </div>
+
+      <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; margin: 16px 0;">
+        <p style="font-weight: 600; color: var(--accent-blue); margin-bottom: 12px;">工具绑定：</p>
+        <ul style="margin-left: 16px;">
+          <li>① Qwen3-LoRA 领域模型</li>
+          <li>② 情感分析模型</li>
+          <li>③ 序列预测模型</li>
+          <li>④ 聚类工具</li>
+          <li>⑤ 知识库检索(Faiss)</li>
+        </ul>
+      </div>
+
+      <p style="margin-top: 16px;"><strong>工作流编排：</strong></p>
+      <div class="flow-item">
+        <div class="flow-number">1</div>
+        <span>数据接收与过滤</span>
+      </div>
+      <div class="flow-item">
+        <div class="flow-number">2</div>
+        <span>并行特征提取（情感/序列/聚类）</span>
+      </div>
+      <div class="flow-item">
+        <div class="flow-number">3</div>
+        <span>知识库检索补充背景信息</span>
+      </div>
+      <div class="flow-item">
+        <div class="flow-number">4</div>
+        <span>主Agent 初步风险评估</span>
+      </div>
+      <div class="flow-item">
+        <div class="flow-number">5</div>
+        <span>若置信度低，启动多Agent协同</span>
+      </div>
+
+      <div class="subsection-title">4.3 多智能体协同的三种核心模式</div>
+      <div class="table-container">
+        <table>
+          <tr>
+            <th>模式</th>
+            <th>说明</th>
+            <th>在平台中的体现</th>
+          </tr>
+          <tr>
+            <td><span class="highlight">分工</span></td>
+            <td>不同Agent负责不同子领域</td>
+            <td>爆炸Agent分析爆炸相关信号，泄露Agent分析化学品信息，疫情Agent分析疾病传播关键词；主Agent负责综合分析</td>
+          </tr>
+          <tr>
+            <td><span class="highlight">辩论</span></td>
+            <td>当多个Agent对同一事件判断不一致时，启动辩论</td>
+            <td>两个子Agent分别给出"高风险"和"中风险"的判断及依据，主Agent要求它们质证，最终加权裁决</td>
+          </tr>
+          <tr>
+            <td><span class="highlight">协同</span></td>
+            <td>Agent之间传递中间结果，联合推理</td>
+            <td>聚类Agent发现的异常话题簇，可传递给序列Agent作为额外特征，情感Agent的情绪曲线可辅助大模型判断严重度</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="mermaid-container">
+        <pre class="mermaid">
+flowchart LR
+    subgraph 分工模式
+        A1[爆炸预警Agent]
+        A2[泄露预警Agent]
+        A3[疫情预警Agent]
+        A1 --> M
+        A2 --> M
+        A3 --> M
+    end
+    
+    subgraph 辩论模式
+        B1[Agent A: 高风险]
+        B2[Agent B: 中风险]
+        B1 <--> B2
+        B1 --> D
+        B2 --> D
+    end
+    
+    subgraph 协同模式
+        C1[聚类Agent] --> C2[序列Agent]
+        C3[情感Agent] --> C2
+        C2 --> C4[大模型研判]
+    end
+    
+    M[主Agent综合分析]
+    D[主Agent加权裁决]
+    
+    style A1 fill:#409eff,opacity:0.8
+    style A2 fill:#67c23a,opacity:0.8
+    style A3 fill:#e6a23c,opacity:0.8
+    style B1 fill:#f56c6c,opacity:0.8
+    style B2 fill:#a855f7,opacity:0.8
+    style C1 fill:#67c23a,opacity:0.8
+    style C2 fill:#409eff,opacity:0.8
+    style C3 fill:#e6a23c,opacity:0.8
+        </pre>
+      </div>
+
+      <div class="subsection-title">4.4 单智能体 vs 多智能体量化对比</div>
+      <div class="table-container">
+        <table class="metrics-table">
+          <tr>
+            <th>指标</th>
+            <th>单通用大模型Agent</th>
+            <th>我们的多智能体系统</th>
+            <th>提升</th>
+          </tr>
+          <tr>
+            <td>预警准确率</td>
+            <td>78%</td>
+            <td>92%</td>
+            <td>+14%</td>
+          </tr>
+          <tr>
+            <td>召回率</td>
+            <td>65%</td>
+            <td>88%</td>
+            <td>+23%</td>
+          </tr>
+          <tr>
+            <td>平均预警提前时间</td>
+            <td>2.1h</td>
+            <td>5.6h</td>
+            <td>+166%</td>
+          </tr>
+          <tr>
+            <td>误报率</td>
+            <td>12%</td>
+            <td>4%</td>
+            <td>-67%</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="note">
+        <p><strong>典型案例回放：</strong>某化学品泄露事件，单Agent因未关联本地小论坛的异常交易关键词而漏报；多Agent中聚类Agent捕获该词群，序列Agent发现该区域事件密度上升，情感Agent识别负面情绪突增，三者辩论后成功预警。</p>
+      </div>
+
+      <div class="demo-tip">
+        <p><strong>演示提示：</strong>演示 /agent-workbench 的消息协同窗口，再切换到 /agent-comparison 展示对比图表和案例回放。</p>
+      </div>
+    </div>
+
+    <!-- 五、知识库与工具链 -->
+    <div class="section">
+      <div class="section-title">
+        <span>五、知识库与工具链</span>
+      </div>
+
+      <div class="subsection-title">5.1 项目知识库构建</div>
+      <ul>
+        <li>为每个预警Agent构建独立知识库，基于 <strong>Faiss</strong> 进行向量存储和相似度检索</li>
+        <li>包含：历史事件案例、应急处理规范、危险品数据库、区域地理信息等</li>
+        <li>使用 Qwen-Agent 框架的 <strong>knowledge</strong> 模块对接</li>
+      </ul>
+
+      <div class="subsection-title">5.2 工具生态整合</div>
+      <ul>
+        <li><strong>地图服务：</strong>ECharts 中国地图，展示区域分布</li>
+        <li><strong>数据采集：</strong>对接开源 API，定时增量抓取</li>
+        <li><strong>报告生成：</strong>Agent 根据分析结果自动填充报告模板，输出结构化文档</li>
+      </ul>
+
+      <div class="subsection-title">5.3 前端性能优化要点</div>
+      <ul>
+        <li>大屏实时数据采用 <strong>WebSocket 模拟推送</strong> + 虚拟列表</li>
+        <li>ECharts 图表按需加载和销毁，避免内存泄漏</li>
+        <li>前端缓存策略减少重复请求</li>
+      </ul>
+    </div>
+
+    <!-- 六、总结与创新点 -->
+    <div class="section">
+      <div class="section-title">
+        <span>六、总结与创新点</span>
+
+      </div>
+
+      <div class="subsection-title">6.1 核心创新点</div>
+      <div class="innovation-point">
+        <div class="innovation-number">1</div>
+        <div class="innovation-content">
+          <p><strong>基于 LoRA 的 Qwen3 垂直领域高效微调</strong>，大幅提升预警专业度，且可快速迭代</p>
+        </div>
+      </div>
+      <div class="innovation-point">
+        <div class="innovation-number">2</div>
+        <div class="innovation-content">
+          <p><strong>Qwen-Agent 驱动的多智能体分工/辩论/协同机制</strong>，解决了单一模型面对复杂隐匿风险时的决策盲区</p>
+        </div>
+      </div>
+      <div class="innovation-point">
+        <div class="innovation-number">3</div>
+        <div class="innovation-content">
+          <p><strong>大模型+小模型混合编排</strong>，既利用了大模型的推理能力，又发挥了专用模型的特征提取专长</p>
+        </div>
+      </div>
+      <div class="innovation-point">
+        <div class="innovation-number">4</div>
+        <div class="innovation-content">
+          <p><strong>全链路私有化部署</strong>，满足涉密场景要求，同时通过 vLLM 保证线上推理性能</p>
+        </div>
+      </div>
+
+      <div class="subsection-title">6.2 已取得的成果</div>
+      <ul>
+        <li>预警准确率 <span class="highlight-green">92%</span>，平均提前 <span class="highlight-green">5.6 小时</span> 发出预警</li>
+        <li>已产出发明专利 X 篇，软件著作权 X 项</li>
+        <li>平台完整运行，具备交付和扩展能力</li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>
