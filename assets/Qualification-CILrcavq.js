@@ -1,4 +1,4 @@
-import{_ as o,k as t,d,e as l,c as a,F as n,m as f,p as r,g as _,w as p,a as u,q as g,t as m,b}from"./index-DPP1UKmG.js";const h={class:"qualification"},w={class:"methodology"},L={class:"data-card method-flow"},k={class:"flow-steps"},B={class:"flow-icon"},C={class:"flow-label"},x={key:0,class:"flow-line"},y={__name:"Qualification",setup(A){const s=[{icon:"Collection",label:`数据采集
+import{_ as o,k as t,d,e as l,c as a,F as n,m as f,p as r,g as _,w as p,a as u,q as g,t as m,b}from"./index-DGHEZnIY.js";const h={class:"qualification"},w={class:"methodology"},L={class:"data-card method-flow"},k={class:"flow-steps"},B={class:"flow-icon"},C={class:"flow-label"},x={key:0,class:"flow-line"},y={__name:"Qualification",setup(A){const s=[{icon:"Collection",label:`数据采集
 与清洗`},{icon:"Edit",label:`领域标注
 与增强`},{icon:"Cpu",label:`基座模型
 选型`},{icon:"Connection",label:`LoRA高效
